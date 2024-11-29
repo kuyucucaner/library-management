@@ -13,7 +13,7 @@ const BookModel = sequelize.define('Book', {
     },
     average_score: {
         type: DataTypes.DECIMAL(3, 2),
-        defaultValue: null
+        defaultValue: -1
     }
 }, {
     timestamps: false

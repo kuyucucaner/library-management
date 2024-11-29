@@ -25,14 +25,26 @@ const UserController = {
             });
     
             if (userWithBooks) {
+                // Geçmiş kitapları ve mevcut kitapları ayırt etme
                 const pastBooks = userWithBooks.BorrowedBooks.filter(book => book.status === 'returned');
                 const currentBooks = userWithBooks.BorrowedBooks.filter(book => book.status === 'borrowed');
+    
+                // Sadece kitap adı ve puanı döndürme
+                const formattedPastBooks = pastBooks.map(book => ({
+                    name: book.Book.name,
+                    score: book.score
+                }));
+    
+                const formattedCurrentBooks = currentBooks.map(book => ({
+                    name: book.Book.name,
+                    score: null  // Mevcut kitapların puanı olmadığı için null döndürebilirsiniz
+                }));
     
                 const response = {
                     id: userWithBooks.id,
                     name: userWithBooks.name,
-                    pastBooks: pastBooks,
-                    currentBooks: currentBooks
+                    pastBooks: formattedPastBooks,
+                    currentBooks: formattedCurrentBooks
                 };
     
                 res.status(200).json(response);
